@@ -24,7 +24,7 @@ class CanvasRender implements IRenderer {
   clear(): void {
     const lastColor = this.ctx.fillStyle.toString();
     this.setColor("#fff");
-    this.rectangle("fill", 0, 0, 200, 200);
+    this.rectangle("fill", 0, 0, this.size.width, this.size.height);
     this.setColor(lastColor);
   }
 
