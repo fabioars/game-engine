@@ -16,7 +16,7 @@ let player = { x: 0, y: 0, speed: 2 };
 const game = new Game(
   {
     load() {},
-    loop() {
+    loop(dt: number) {
       if (Input.keyboard.isDown("s")) {
         player.y += player.speed;
       }
