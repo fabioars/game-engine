@@ -1,24 +1,20 @@
-type DrawMode = "fill" | "line";
+import { IRenderer, DrawMode } from "../renderer/interface";
 
 class Graphics {
-  private ctx: CanvasRenderingContext2D;
+  private renderer: IRenderer;
 
-  constructor(ctx: CanvasRenderingContext2D) {
-    this.ctx = ctx;
+  constructor(renderer: IRenderer) {
+    this.renderer = renderer;
   }
 
-  setColor(color: string | CanvasGradient | CanvasPattern): Graphics {
-    this.ctx.fillStyle = color;
-    this.ctx.strokeStyle = color;
+  setColor(color: string): Graphics {
+    this.renderer.setColor(color);
 
     return this;
   }
 
   clear(): Graphics {
-    const lastColor = this.ctx.fillStyle;
-    this.setColor("#fff");
-    this.rectangle("fill", 0, 0, 200, 200);
-    this.setColor(lastColor.toString());
+    this.renderer.clear();
 
     return this;
   }
@@ -30,26 +26,19 @@ class Graphics {
     width: number,
     height: number
   ): Graphics {
-    const draw =
-      mode === "fill"
-        ? this.ctx.fillRect.bind(this.ctx)
-        : this.ctx.strokeRect.bind(this.ctx);
+    this.renderer.rectangle(mode, x, y, width, height);
 
-    draw(x, y, width, height);
     return this;
   }
 
   point(x: number, y: number): Graphics {
-    this.ctx.fillRect(x, y, 1, 1);
+    this.renderer.point(x, y);
+
     return this;
   }
 
-  line(fromX: number, fromY: number, toX: number, toY: number): Graphics {
-    this.ctx.beginPath();
-    this.ctx.moveTo(fromX, fromY);
-    this.ctx.lineTo(toX, toY);
-    this.ctx.closePath();
-    this.ctx.stroke();
+  line(fromX: number, fromY: number, toX: number, toY: number) {
+    this.renderer.line(fromX, fromY, toX, toY);
 
     return this;
   }
