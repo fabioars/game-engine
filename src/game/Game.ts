@@ -1,31 +1,43 @@
 import Graphics from "../graphics/Graphics";
+import Time from "./Time";
 
 interface GameLogic {
   load: Function;
   loop: Function;
   draw: Function;
 }
-
+let time = 0;
 class Game {
-  private setup: GameLogic;
+  private logic: GameLogic;
   private graphics: Graphics;
 
-  constructor(gameSetup: GameLogic, graphics: Graphics) {
-    this.setup = gameSetup;
-    this.graphics = graphics;
+  private time: Time;
 
-    this.setup.load();
+  constructor(logic: GameLogic, graphics: Graphics, time?: Time) {
+    this.logic = logic;
+    this.graphics = graphics;
+    this.time = time ? time : new Time();
+
     this.runLoop();
   }
 
   runLoop() {
+    this.logic.load();
+    this.time.update();
+    
     window.requestAnimationFrame(this.loop.bind(this));
   }
 
   loop() {
-    this.setup.loop();
+    const dt = this.time.deltaTime();
+    this.logic.loop(dt);
+    time += dt;
+    console.log(time);
     this.graphics.clear();
-    this.setup.draw();
+    this.time.update();
+    this.logic.draw(this.time.deltaTime());
+
+    this.time.update()
     requestAnimationFrame(this.loop.bind(this));
   }
 }
