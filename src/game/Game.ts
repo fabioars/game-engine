@@ -6,7 +6,7 @@ interface GameLogic {
   loop: Function;
   draw: Function;
 }
-let time = 0;
+
 class Game {
   private logic: GameLogic;
   private graphics: Graphics;
@@ -31,8 +31,6 @@ class Game {
   loop() {
     const dt = this.time.deltaTime();
     this.logic.loop(dt);
-    time += dt;
-    console.log(time);
     this.graphics.clear();
     this.time.update();
     this.logic.draw(this.time.deltaTime());
