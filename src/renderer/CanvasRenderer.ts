@@ -1,10 +1,15 @@
-import { IRenderer, DrawMode } from "./interface";
+import { IRenderer, DrawMode, ISize } from "./interface";
 
 class CanvasRender implements IRenderer {
   private ctx: CanvasRenderingContext2D;
+  readonly size: ISize;
 
-  constructor(ctx: CanvasRenderingContext2D) {
-    this.ctx = ctx;
+  constructor(canvas: HTMLCanvasElement) {
+    this.ctx = canvas.getContext("2d");
+    this.size = {
+      width: canvas.width,
+      height: canvas.height,
+    };
   }
 
   getColor(): string {
@@ -48,6 +53,11 @@ class CanvasRender implements IRenderer {
     this.ctx.lineTo(toX, toY);
     this.ctx.closePath();
     this.ctx.stroke();
+  }
+
+  print(text: string, x: number, y: number): void {
+    this.ctx.font = '12px sans-serif';
+    this.ctx.fillText(text, x, y);
   }
 }
 

@@ -6,8 +6,7 @@ import CanvasRender from "./renderer/CanvasRenderer";
 let canvas: HTMLCanvasElement;
 canvas = document.querySelector<HTMLCanvasElement>("#app");
 
-const ctx: CanvasRenderingContext2D = canvas!.getContext("2d");
-const renderer = new CanvasRender(ctx);
+const renderer = new CanvasRender(canvas);
 
 const graphics = new Graphics(renderer);
 
@@ -18,20 +17,31 @@ const game = new Game(
     load() {},
     loop(dt: number) {
       if (Input.keyboard.isDown("s")) {
-        player.y += player.speed;
+        if(player.y < graphics.rendererSize.height - 10) {
+          player.y += player.speed;
+        }
       }
       if (Input.keyboard.isDown("w")) {
-        player.y -= player.speed;
+        if(player.y > 0) {
+          player.y -= player.speed;
+        }
       }
       if (Input.keyboard.isDown("a")) {
-        player.x -= player.speed;
+        if(player.x > 0) {
+          player.x -= player.speed;
+        }
       }
       if (Input.keyboard.isDown("d")) {
-        player.x += player.speed;
+        if(player.x < graphics.rendererSize.width - 10) {
+          player.x += player.speed;
+        }
       }
     },
     draw() {
+      graphics.setColor('#000');
       graphics.rectangle("fill", player.x, player.y, 10, 10);
+      graphics.setColor('#f00');
+      graphics.print('Hello World', 5, 15);
     }
   },
   graphics
