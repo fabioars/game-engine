@@ -7,7 +7,11 @@ const canvas = document.querySelector<HTMLCanvasElement>("#app");
 const renderer = new CanvasRender(canvas);
 const graphics = new Graphics(renderer);
 
-const player = { x: 0, y: 0, speed: 200 };
+const player = { 
+  x: graphics.rendererSize.width/2, 
+  y: graphics.rendererSize.height/2, 
+  speed: 200 
+};
 
 const game = new Game(
   {
@@ -36,7 +40,7 @@ const game = new Game(
     },
     draw() {
       graphics.setColor('#000');
-      graphics.rectangle("fill", player.x, player.y, 10, 10);
+      graphics.ellipse("fill", player.x, player.y, 5, 5);
       graphics.setColor('#f00');
       graphics.print('Hello World', 5, 15);
     }

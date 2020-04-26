@@ -59,6 +59,18 @@ class CanvasRender implements IRenderer {
     this.ctx.font = '12px sans-serif';
     this.ctx.fillText(text, x, y);
   }
+
+  ellipse(mode: DrawMode, x: number, y: number, radiusX: number, radiusY: number): void {
+    const draw = mode === "fill"
+      ? this.ctx.fill.bind(this.ctx)
+      : this.ctx.stroke.bind(this.ctx);
+    
+    this.ctx.beginPath();
+    this.ctx.ellipse(x, y, radiusX, radiusY, 0, 0, 2 * Math.PI);
+    draw();
+    this.ctx.closePath();
+
+  }
 }
 
 export default CanvasRender;

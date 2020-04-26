@@ -49,6 +49,11 @@ class Graphics {
     this.renderer.print(text, x, y);
     return this;
   }
+
+  ellipse(mode: DrawMode, x: number, y: number, radiusX: number, radiusY: number): Graphics {
+    this.renderer.ellipse(mode, x, y, radiusX, radiusY);
+    return this;
+  }
 }
 
 export default Graphics;

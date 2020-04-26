@@ -22,6 +22,7 @@ export interface IRenderer {
   point(x: number, y: number): void;
   line(fromX: number, fromY: number, toX: number, toY: number): void;
   print(text:string, x: number, y: number): void;
+  ellipse(mode: DrawMode, x: number, y: number, radiusX: number, radiusY: number): void;
 }
 
 export default IRenderer;
